@@ -30,12 +30,39 @@ else()
     message(STATUS "Using local ${RAYLIB_LIB}")
 endif()
 
-file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_LIST_DIR}/source/*.cpp")
-
 set(PROJECT_INCLUDE "${CMAKE_CURRENT_LIST_DIR}/include")
 
+ADD_LIBRARY(oscpack 
+    ${PROJECT_INCLUDE}/oscpack/ip/IpEndpointName.h
+    ${PROJECT_INCLUDE}/oscpack/ip/IpEndpointName.cpp
+
+    ${PROJECT_INCLUDE}/oscpack/ip/NetworkingUtils.h
+    ${PROJECT_INCLUDE}/oscpack/ip/NetworkingUtils.cpp
+
+    ${PROJECT_INCLUDE}/oscpack/ip/UdpSocket.h
+    ${PROJECT_INCLUDE}/oscpack/ip/UdpSocket.cpp
+
+    ${PROJECT_INCLUDE}/oscpack/ip/PacketListener.h
+    ${PROJECT_INCLUDE}/oscpack/ip/TimerListener.h
+
+    ${PROJECT_INCLUDE}/oscpack/osc/OscTypes.h
+    ${PROJECT_INCLUDE}/oscpack/osc/OscTypes.cpp 
+    ${PROJECT_INCLUDE}/oscpack/osc/OscHostEndianness.h
+    ${PROJECT_INCLUDE}/oscpack/osc/OscException.h
+    ${PROJECT_INCLUDE}/oscpack/osc/OscPacketListener.h
+    ${PROJECT_INCLUDE}/oscpack/osc/MessageMappingOscPacketListener.h
+    ${PROJECT_INCLUDE}/oscpack/osc/OscReceivedElements.h
+    ${PROJECT_INCLUDE}/oscpack/osc/OscReceivedElements.cpp
+    ${PROJECT_INCLUDE}/oscpack/osc/OscPrintReceivedElements.h
+    ${PROJECT_INCLUDE}/oscpack/osc/OscPrintReceivedElements.cpp
+    ${PROJECT_INCLUDE}/oscpack/osc/OscOutboundPacketStream.h
+    ${PROJECT_INCLUDE}/oscpack/osc/OscOutboundPacketStream.cpp
+)
+
+file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_LIST_DIR}/source/*.cpp")
+
 add_executable(${PROJECT_NAME}
-    source/main.cpp
+    source/main.cpp 
     source/appconfig.h
     source/scene.h
     source/scene.cpp
@@ -52,4 +79,4 @@ target_sources(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_INCLUDE})
 
 # Link Libraries
-target_link_libraries(${PROJECT_NAME} PRIVATE ${RAYLIB_LIB})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${RAYLIB_LIB} oscpack)

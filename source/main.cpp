@@ -33,12 +33,12 @@ int main() {
             IpEndpointName(IpEndpointName::ANY_ADDRESS, PORT),
             &maxReceiver);
 
-    // std::unique_ptr<Scene> scene = std::make_unique<Scene>();
+    std::unique_ptr<Scene> scene = std::make_unique<Scene>();
 
-    // while (!WindowShouldClose()) {
-    //     scene->showGrid();
-    //     scene->draw();
-    // }
+    while (!WindowShouldClose()) {
+        scene->showGrid();
+        scene->draw();
+    }
 
     s.RunUntilSigInt();
 
